@@ -1,0 +1,30 @@
+{
+  "name": "esbuild-getting-started",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./esbuild.config.mjs --dev tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tiptap/react": "^2.0.0-beta.83",
+    "@tiptap/starter-kit": "^2.0.0-beta.127",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.4.2",
+    "react-hotkeys-hook": "^3.4.4",
+    "rko": "^0.5.25"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.1",
+    "@types/react": "^17.0.30",
+    "@types/react-dom": "^17.0.9",
+    "create-serve": "^1.0.1",
+    "esbuild": "^0.13.8",
+    "esbuild-css-modules-plugin": "^2.0.9"
+  }
+}

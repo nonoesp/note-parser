@@ -1,0 +1,60 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-family: system-ui;
+    font-size: 1.3rem;
+    background-color: #fafafa;
+}
+
+div {
+    /* color: gray; */
+    font-weight: 500;
+}
+
+.ProseMirror-focused {
+    outline: none;
+}
+
+.picture {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.wrapper {
+    padding: 0 20px;
+    max-width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zone {
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    padding: 20px;
+    margin-bottom: 40px;
+    color: gray;
+}
+
+.dropzone {
+    opacity: 0.8;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dropzone:hover {
+    opacity: 1;
+}

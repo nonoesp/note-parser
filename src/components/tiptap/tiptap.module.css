@@ -1,0 +1,29 @@
+.editor {
+
+    overflow: hidden;
+
+    font-size: 0.75rem;
+    background-color: #fff;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    padding: 20px;
+    margin-bottom: 40px;
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+    font-weight: 500;
+    color: black;
+    letter-spacing: -0.02em;
+}
+
+.editor .contenteditable:focus {
+    outline: none;
+    border: none;
+}
+
+.editor p {
+    /* background-color: plum; */
+    margin: 0;
+    width: 9999%;
+    max-width: auto;
+}
