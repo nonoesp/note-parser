@@ -10,7 +10,7 @@ import { TipTap } from './components/tiptap'
 function App(): JSX.Element {
     useKeyboardShortcuts();
     const { appState } = useAppState();
-    
+
     const {
         updateText,
     } = app
@@ -19,20 +19,20 @@ function App(): JSX.Element {
     const expenses = getExpenses(lines);
 
     return (
-            <>
-                <div className="wrapper">
+        <>
+            <div className="wrapper">
                 <p>File Parser ⚡️</p>
                 <br />
                 {appState.text ?
-                (<div style={{position: 'relative'}}>
-                    <TipTap/>
-                    <Display
-                        lines={lines}
-                        editable={false}
-                        onInput={null}
-                    />
-                </div>):
-                <Dropzone />}
+                    (<div style={{ position: 'relative' }}>
+                        <TipTap />
+                        <Display
+                            lines={lines}
+                            editable={false}
+                            onInput={null}
+                        />
+                    </div>) :
+                    <Dropzone />}
                 {/* <br />
 
                 {expenses.length ? (
@@ -53,15 +53,6 @@ function App(): JSX.Element {
         </>
     )
 }
-            {/* <Picture
-                image="https://nono.imgix.net/img/u/profile-nono-ma.jpg?ixlib=php-3.3.1&w=800"
-            />
-            <Picture
-                image="https://nono.imgix.net/img/u/post-yuval-noah-harari.jpg?ixlib=php-3.3.1"
-            />
-            <Picture
-                image="https://nono.imgix.net/img/u/podcast-luis-ruiz-padron.jpg?ixlib=php-3.3.1&w=900"
-            /> */}
 
 const AppWrapper: React.FC = () => {
     return <App />
