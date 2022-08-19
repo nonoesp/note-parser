@@ -8,7 +8,7 @@ function Person(): JSX.Element {
     const age = useCount(31);
 
     const width = useWindowWidth();
-    useDocumentTitle(`Nono's App (${count.value})`)
+    useDocumentTitle(`Note Parser (${count.value})`)
 
     const [num, setNum] = useState(0);
 
