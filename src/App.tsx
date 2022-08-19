@@ -48,6 +48,9 @@ function App(): JSX.Element {
                         {`${expense.value}${expense.unit}`}
                     </div>
                 )})}</div></div>) : null} */}
+                <div className="footer">
+                    A thing by <a href="https://nono.ma">Nono Martínez Alonso</a>
+                </div>
             </div>
 
         </>
