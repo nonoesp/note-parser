@@ -21,7 +21,7 @@ function App(): JSX.Element {
     return (
         <>
             <div className="wrapper">
-                <p>File Parser ⚡️</p>
+                <p>Note Parser ⚡️</p>
                 <br />
                 {appState.text ?
                     (<div style={{ position: 'relative' }}>
