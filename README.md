@@ -2,7 +2,7 @@
 
 A plain-text parser proof-of-concept.
 
-At the moment, it only parses dates, weights, and currency in euros.
+At the moment, this app parses dates, weights, and currency in euros.
 
 Here's a sample note.
 
