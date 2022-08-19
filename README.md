@@ -27,6 +27,20 @@ Aug
 
 ## Usage
 
-- `https://github.com/nonoesp/note-parser && cd note-parser`
-- `npm install`
-- `npm start`
+Clone this repository locally.
+
+```sh
+https://github.com/nonoesp/note-parser && cd note-parser
+```
+
+Install NPM dependencies
+
+```sh
+npm install
+```
+
+Start the development server (with esbuild).
+
+```sh
+npm start
+```
