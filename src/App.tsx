@@ -6,6 +6,7 @@ import { useKeyboardShortcuts } from 'hooks'
 import { Display } from './components/display'
 import { app } from 'state'
 import { TipTap } from './components/tiptap'
+import { Report } from './components/report'
 
 function App(): JSX.Element {
     useKeyboardShortcuts();
@@ -32,22 +33,12 @@ function App(): JSX.Element {
                         onInput={null}
                     />
                 </div>):
-                <Dropzone />}
-                {/* <br />
-
-                {expenses.length ? (
-                    <div>
-                    <p>Expenses</p>
-                    <div style={{fontFamily: `monospace`}}>
-                    {expenses.map((l: Line, index: number) => {
-                        const expense = getLineExpense(l)
-                        return (
-                    <div key={index}>
-                        {l.date.year}.{l.date.month.toString().padStart(2, `0`)}.{l.date.day.toString().padStart(2, `0`)}
-                        &nbsp;·&nbsp;
-                        {`${expense.value}${expense.unit}`}
-                    </div>
-                )})}</div></div>) : null} */}
+                <Dropzone />
+                }
+                
+            </div>
+            <div className="wrapper">
+                <Report />
             </div>
 
         </>
