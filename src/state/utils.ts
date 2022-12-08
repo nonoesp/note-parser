@@ -80,7 +80,11 @@ export function getLineSummary(line: Line): string {
         }
         case `EXPENSE`: {
             const i = getLineExpense(line)
-            return `${(i.value as number).toFixed(2)} ${i.unit}`
+            if (i.unit == '$') {
+                i.value = (i.value as number) * 0.98
+                i.unit = '€'
+            }
+            return `${(i.value as number).toFixed(2)} ${i.unit}` // ${getLineDate(line)}
             break
         }
     }
@@ -248,7 +252,7 @@ export function parseNote(text): Line[] {
                 }
             })
 
-            // EUR
+            // € EUR
             const eur = s.match(new RegExp(/\S+€/g))
             eur && eur.forEach((match) => {
                 const item: LineItem = {}
@@ -261,6 +265,20 @@ export function parseNote(text): Line[] {
                     line.type = `EXPENSE`
                 }
             })
+
+            // $ USD
+            const usd = s.match(new RegExp(/\$\S+/g))
+            usd && usd.forEach((match) => {
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `$`
+                item.value = parseFloat(match.replace(item.unit, ''))
+                line.items.push(item)
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })            
 
             // TAG
             const tag = s.match(new RegExp(/#\S+/g))
