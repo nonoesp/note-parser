@@ -1,0 +1,8 @@
+.header {
+    cursor: pointer;
+    user-select: none;
+}
+
+.contents {
+    /* border: 1px solid goldenrod; */
+}
