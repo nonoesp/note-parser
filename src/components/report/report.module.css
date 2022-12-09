@@ -1,0 +1,33 @@
+.report {
+    /* border: 3px solid plum; */
+}
+
+.year {
+    font-size: 1.2rem;
+    font-weight: 700 !important;
+    margin: 1.5rem 0 0.6rem 0;
+    letter-spacing: -0.035rem;
+}
+
+.month {
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    color: gray;
+    margin: 0.85rem 0 0.4rem 0;
+}
+
+.day {
+    font-size: 0.8rem;
+    margin: 0.5rem 0;
+}
+
+.expense {
+    font-size: 0.6rem;
+}
+
+.total {
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    margin: 0.85rem 0 0.4rem 0;
+    color: rgb(109, 109, 109);
+}

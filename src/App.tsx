@@ -37,9 +37,12 @@ function App(): JSX.Element {
                 }
                 
                 <Report />
+
+                <br/>
                 <div className="footer">
                     A thing by <a href="https://nono.ma">Nono Martínez Alonso</a>
                 </div>
+                <br/>
             </div>
         </>
     )

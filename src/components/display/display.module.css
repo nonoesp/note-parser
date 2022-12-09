@@ -44,7 +44,7 @@
 }
 
 .value {
-    /* background-color: white; */
+    background-color: white;
     flex-basis: 15%;
     color: #777;
     text-align:right;
