@@ -189,7 +189,7 @@ export function parseNote(text): Line[] {
             if (month) {
                 const item: LineItem = {}
                 item.type = `MONTH`
-                item.value = months.indexOf(month[0].toLowerCase()) % 12 + 1
+                item.value = months.indexOf(month[0].toLowerCase()) % 12
                 line.items.push(item)
 
                 if (!line.type) {
@@ -231,7 +231,7 @@ export function parseNote(text): Line[] {
             })
 
             // EUR/n
-            const eurDivided = s.match(new RegExp(/\S+€(\/\d+)+/g))
+            const eurDivided = s.match(new RegExp(/(\d.+\d)€(\/\d+)+/g))
             eurDivided && eurDivided.forEach((match) => {
                 s = s.replace(match, ``)
                 const item: LineItem = {}
@@ -244,16 +244,38 @@ export function parseNote(text): Line[] {
                 item.value = numerator / denominator
                 line.items.push(item)
 
-                console.log(match);
-                console.log(`${numerator} / ${denominator} = ${item.value}`);
+                // console.log(match);
+                // console.log(`${numerator} / ${denominator} = ${item.value}`);
 
                 if (!line.type) {
                     line.type = `EXPENSE`
                 }
             })
 
+            // EUR/n
+            const eurMultiplied = s.match(new RegExp(/(\d.+\d)€(\*\d+)+/g))
+            eurMultiplied && eurMultiplied.forEach((match) => {
+                s = s.replace(match, ``)
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `€`
+
+                const numerator = parseFloat(match.replace(item.unit, ''))
+                const denominator = parseInt(match.split(`*`)[1])
+
+                item.value = numerator * denominator
+                line.items.push(item)
+
+                // console.log(match);
+                // console.log(`${numerator} / ${denominator} = ${item.value}`);
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })            
+
             // € EUR
-            const eur = s.match(new RegExp(/\S+€/g))
+            const eur = s.match(new RegExp(/(\d.+\d)€/g))
             eur && eur.forEach((match) => {
                 const item: LineItem = {}
                 item.type = `MONEY`
@@ -265,6 +287,50 @@ export function parseNote(text): Line[] {
                     line.type = `EXPENSE`
                 }
             })
+
+            // USD/n
+            const usdDivided = s.match(new RegExp(/\$(\d.+\d)+(\/\d+)+/g))
+            usdDivided && usdDivided.forEach((match) => {
+                s = s.replace(match, ``)
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `$`
+
+                const numerator = parseFloat(match.replace(item.unit, ''))
+                const denominator = parseInt(match.split(`/`)[1])
+
+                item.value = numerator / denominator
+                line.items.push(item)
+
+                // console.log(match);
+                // console.log(`${numerator} / ${denominator} = ${item.value}`);
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })
+
+            // USD/n
+            const usdMultiplied = s.match(new RegExp(/\$(\d.+\d)+(\*\d+)+/g))
+            usdMultiplied && usdMultiplied.forEach((match) => {
+                s = s.replace(match, ``)
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `$`
+
+                const numerator = parseFloat(match.replace(item.unit, ''))
+                const denominator = parseInt(match.split(`*`)[1])
+
+                item.value = numerator * denominator
+                line.items.push(item)
+
+                // console.log(match);
+                // console.log(`${numerator} / ${denominator} = ${item.value}`);
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })   
 
             // $ USD
             const usd = s.match(new RegExp(/\$\S+/g))
@@ -279,6 +345,20 @@ export function parseNote(text): Line[] {
                     line.type = `EXPENSE`
                 }
             })            
+
+            // $ BAT
+            const bat = s.match(new RegExp(/\S+BAT/g))
+            bat && bat.forEach((match) => {
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `BAT`
+                item.value = parseFloat(match.replace(item.unit, ''))
+                line.items.push(item)
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })         
 
             // TAG
             const tag = s.match(new RegExp(/#\S+/g))
@@ -309,7 +389,6 @@ export function parseNote(text): Line[] {
             return line
         })
 
-    console.log(lines);
     return lines
 }
 
