@@ -3,22 +3,46 @@
 }
 
 .year {
-    font-size: 1.2rem;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    margin: 1.2rem 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.year-title {
+    position: sticky;
+    top: 0rem;
+    background-color: #fff;
+    font-size: 0.9rem;
     font-weight: 700 !important;
-    margin: 1.5rem 0 0.6rem 0;
-    letter-spacing: -0.035rem;
+    z-index: 100;
 }
 
 .month {
-    font-size: 0.8rem;
+    /* text-decoration: underline; */
+    background-color: #fff;
+    font-size: 0.7rem;
     text-transform: capitalize;
     color: gray;
     margin: 0.85rem 0 0.4rem 0;
+    z-index: 100;
 }
 
 .day {
     font-size: 0.8rem;
     margin: 0.5rem 0;
+}
+
+.day-details {
+    font-weight: 400;
+    color: #a9a9a9;
+}
+
+.day-details-faded {
+    text-transform: none;
+    font-weight: 400;
+    color: #cbcbcb; 
 }
 
 .expense {

@@ -9,7 +9,6 @@ export function Display(props): JSX.Element {
         <div className={styles.display}>
             {props.lines && (
                 props.lines.map((line, index) => {
-                    const lineWeight = getLineWeight(line);
                     return (
                         <div className={styles.grid} key={index}>
                             <div className={styles.text}>

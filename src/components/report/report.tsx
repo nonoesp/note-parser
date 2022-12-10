@@ -3,8 +3,30 @@ import styles from './report.module.css'
 import { app } from 'state'
 import { useAppState } from 'state'
 import { parseNote, getLineDate, getExpenses, Line, getLineExpense, months } from '../../state/utils'
+import { Collapsible } from 'components/collapsible'
 
 // import { getLineSummary, getLineWeight } from 'state/utils'
+
+function structureExpenses(expenses) {
+
+    const structured = {}
+
+    Object.keys(expenses).map(k => expenses[k]).forEach(e => {
+        const d = e.date;
+        if (!structured.hasOwnProperty(d.year)) {
+            structured[d.year] = {}
+        }
+        if (!structured[d.year].hasOwnProperty(d.month)) {
+            structured[d.year][d.month] = {}
+        }        
+        if (!structured[d.year][d.month].hasOwnProperty(e.date.day)) {
+            structured[d.year][d.month][d.day] = []
+        }
+        structured[d.year][d.month][d.day].push(e)
+    })
+
+    return structured
+}
 
 export function Report(props): JSX.Element {
 
@@ -25,89 +47,102 @@ export function Report(props): JSX.Element {
         }
     );
 
-    let currentDate : {day: number, month: number, year: number} = {
-        day: -1,
-        month: -1,
-        year: -1,
-    };
-    let runningMonthlyExpenses = 0;
-    let runningYearlyExpenses = 0;
+    const structuredExpenses = structureExpenses(expenses);
 
-    return (
-        <div className={styles.report}>
-            {expenses.length ? (
-                <div>
-                <div>
-                {expenses.map((l: Line, index: number) => {
-                    const expense = getLineExpense(l)
-                    const date = getLineDate(l, `yyyy-mm-dd`).split(`.`).join(`-`)
+    const elements = []
 
-                    if (expense.unit == '$') {
-                        expense.value = (expense.value as number) * 0.98
-                        expense.unit = '€'
-                    }
-                    runningMonthlyExpenses += expense.value as number
-                    runningYearlyExpenses += expense.value as number
+    Object.keys(structuredExpenses).forEach(kYear => {
+        
+        const yearElements = []
+        const year = structuredExpenses[kYear]
+        let yearTotalAmount = 0
+        let yearExpenseCount = 0
 
-                    let totalMonth;
-                    if (currentDate.month > -1 && currentDate.month != l.date.month ||
-                        currentDate.month > -1 && currentDate.year > -1 && currentDate.year != l.date.year) {
-                        totalMonth = <div key={`${index}-total-month`} class={styles.total}>{months[currentDate.month-1]} · {runningMonthlyExpenses.toFixed(2)}€</div>
-                            runningMonthlyExpenses = 0
-                    }
+        Object.keys(year).forEach(kMonth => {
 
-                    let totalYear;
-                    if (currentDate.year > -1 && currentDate.year != l.date.year) {
-                            totalYear = <div key={`${index}-total-year`} class={styles.total}>{currentDate.year} · {runningYearlyExpenses.toFixed(2)}€</div>
-                            runningYearlyExpenses = 0
-                    }                    
+            const month = year[kMonth]
+            let monthTotalAmount = 0
+            let monthExpenseCount = 0
+            const monthElements = []
 
-                    let year;
-                    if (currentDate.year != l.date.year) {
-                        currentDate.year = l.date.year
-                
-                        year = <div key={`${index}-year`} class={styles.year}>{l.date.year}</div>
-                        currentDate.month = -1
+            Object.keys(month).forEach(kDay => {
+
+                const day = month[kDay]
+
+                const dayElements = []
+                let dayTotalAmount = 0
+                let dayElementCount = 0
+
+                day.forEach((line: Line, index) => {
+                    const expense = getLineExpense(line)
+                    if (expense.unit == `$`) {
+                        expense.unit = `€`
+                        expense.value = 0.95*(expense.value as number)
+                    } else if (expense.unit == `BAT`) {
+                        expense.unit = `€`
+                        expense.value = 0.21*(expense.value as number)
                     }
 
-                    let totalEnd;
-                    let totalYearEnd;
-                    if (index == expenses.length-1) {
-                        totalEnd = <div key={`${index}-total-month`} class={styles.total}>{months[currentDate.month-1]} · {runningMonthlyExpenses.toFixed(2)}€</div>
-                        totalYearEnd = <div key={`${index}-total-year`} class={styles.total}>{currentDate.year} · {runningYearlyExpenses.toFixed(2)}€</div>
-                    }
+                    // if (
+                    //     line.text.includes('#work @autodesk') &&
+                    //     !line.text.includes('#applause') &&
+                    //     !line.text.includes('#wellness')
+                    // ) {
+                        dayElementCount += 1
+                        const text = <>{(expense.value as number).toFixed(2)}{expense.unit} <span style={{opacity: 0.2}}>{line.text}</span></>
+                        dayElements.push(
+                            <div
+                                key={`expense-${index}`}
+                                class={styles.expense}>
+                                    {text}
+                            </div>)
+                        dayTotalAmount += expense.value as number
+                    // }
+                })
 
-                    let month;
-                    if (currentDate.month != l.date.month) {
-                        currentDate.month = l.date.month
-                        month = <div key={`${index}-month`} class={styles.month}>{months[l.date.month-1]}</div>
-                        currentDate.day = -1
-                    }
-                    
-                    let day;
-                    if (currentDate.day != l.date.day) {
-                        currentDate.day = l.date.day
-                        day = <div key={`${index}-day`} class={styles.day}>{l.date.day}</div>
-                    }
+                monthTotalAmount += dayTotalAmount
+                monthExpenseCount += dayElementCount
 
-                    let expenseItem = (
-                    <div key={index} class={styles.expense}>
-                        {`${(expense.value as number).toFixed(2)}${expense.unit}`} <span style={{opacity: 0.2}}>({runningMonthlyExpenses.toFixed(2)}) {l.text}</span>
-                    </div>
-                    )
+                const dayHeader = <>{kDay.toString().padStart(2, '0')} <span class={styles.dayDetails}>
+                    {dayTotalAmount.toFixed(2)}€</span> <span class={styles.dayDetailsFaded}>{dayElementCount} items</span>
+                    </>
 
-                    return (
-                    <>
-                {totalMonth}
-                {totalYear}
-                {year}
-                {month}
-                {day}
-                {expenseItem}
-                {totalEnd}
-                {totalYearEnd}
+                if (dayElementCount) {
+                    monthElements.push(
+                        <Collapsible
+                            header={<div class={styles.day}>{dayHeader}</div>}
+                            contents={<div>{dayElements}</div>}
+                            open={true}
+                        />)                
+                }
+            })
+
+            yearTotalAmount += monthTotalAmount
+            yearExpenseCount += monthExpenseCount
+            
+            const monthHeader = <>{months[kMonth]} <span class={styles.dayDetails}>
+                {monthTotalAmount.toFixed(2)}€</span> <span class={styles.dayDetailsFaded}>{monthExpenseCount} items</span>
                 </>
-            )})}</div></div>) : null}
+            yearElements.push(<Collapsible
+                    header={<div key={`month-${kMonth}`} class={styles.month}>{monthHeader}</div>}
+                    contents={<div>{monthElements}</div>}
+                />)   
+        })
+
+        const yearHeader = <>{kYear} <span class={styles.dayDetails}>
+        {yearTotalAmount.toFixed(2)}€</span> <span class={styles.dayDetailsFaded}>{yearExpenseCount} items</span>
+        </>
+
+        const yearElement = <Collapsible
+            header={<div key={`report-${kYear}`} class={styles.yearTitle}>{yearHeader}</div>}
+            contents={<div>{yearElements}</div>}
+        />
+        elements.push(<div key={`year-${kYear}`} class={styles.year}>{yearElement}</div>)
+    })
+
+    return <>
+        <div class={styles.report}>
+            {elements}
         </div>
-    )
+    </>
 }
