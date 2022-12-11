@@ -11,6 +11,16 @@ export function useKeyboardShortcuts() {
     app.redo()
   })
 
+  useHotkeys('enter', () => {
+    const {
+      updateText,
+    } = app
+
+    if (app.state.appState.text == ``) {
+      updateText(`2022`);
+    }
+  })
+
   // useHotkeys('command+c,ctrl+c', () => {
   //   app.copySvg()
   // })

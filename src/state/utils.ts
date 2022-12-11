@@ -275,8 +275,22 @@ export function parseNote(text): Line[] {
             })            
 
             // € EUR
-            const eur = s.match(new RegExp(/(\d.+\d)€/g))
+            const eur = s.match(new RegExp(/(\d+)€/g))
             eur && eur.forEach((match) => {
+                const item: LineItem = {}
+                item.type = `MONEY`
+                item.unit = `€`
+                item.value = parseFloat(match.replace(item.unit, ''))
+                line.items.push(item)
+
+                if (!line.type) {
+                    line.type = `EXPENSE`
+                }
+            })
+
+            // € EUR
+            const eurDecimal = s.match(new RegExp(/(\d+.\d+)€/g))
+            eurDecimal && eurDecimal.forEach((match) => {
                 const item: LineItem = {}
                 item.type = `MONEY`
                 item.unit = `€`

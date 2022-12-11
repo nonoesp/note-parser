@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tiptap/react": "^2.0.0-beta.83",
+    "@tiptap/react": "^2.0.0-beta.202",
     "@tiptap/starter-kit": "^2.0.0-beta.127",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

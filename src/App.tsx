@@ -24,7 +24,7 @@ function App(): JSX.Element {
             <div className="wrapper">
                 <p>Note Parser ⚡️</p>
                 <br />
-                {appState.text ?
+                {appState.text && true ?
                 (<div style={{position: 'relative'}}>
                     <TipTap/>
                     <Display
