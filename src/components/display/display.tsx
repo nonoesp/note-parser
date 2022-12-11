@@ -15,7 +15,7 @@ export function Display(props): JSX.Element {
                                 {/* {line.text} */}
                             </div>
                             <div className={styles.type} data-type={line.type}>
-                                {/* {line.type} */} ·
+                                {line.type} ·
                             </div>
                             <div className={styles.value}>
                                 {getLineSummary(line)}
