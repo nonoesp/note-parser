@@ -84,9 +84,8 @@ export function Report(props): JSX.Element {
                     }
 
                     // if (
-                    //     line.text.includes('#work @autodesk') &&
-                    //     !line.text.includes('#applause') &&
-                    //     !line.text.includes('#wellness')
+                    //     line.text.includes('#food') &&
+                    //     !line.text.includes('@paco')
                     // ) {
                         dayElementCount += 1
                         const text = <>{(expense.value as number).toFixed(2)}{expense.unit} <span style={{opacity: 0.2}}>{line.text}</span></>
